@@ -7,18 +7,41 @@
           - name: Update repository index
             apt:
                     update_cache: yes
+            when: ansible_distribution == "Ubuntu"
 
           - name: Install apache2 package
             apt:
                     name: apache2
                     state: latest
-
+            when: ansible_distribution == "Ubuntu"
+    
           - name: Install php modules for apache
             apt:
                     name: libapache2-mod-php7.4
                     state: latest
+            when: ansible_distribution == "Ubuntu"
+        
+          - name: Update repository index
+            dnf:
+                    update_cache: yes
+            when: ansible_distribution == "CentOS"
 
-          - name: Start apache web server service
+          - name: Install apache2 package
+            dnf:
+                    name: httpd
+                    state: latest
+            when: ansible_distribution == "CentOS"
+    
+          - name: Install php modules for apache
+            dnf:
+                    name: php
+                    state: latest
+            when: ansible_distribution == "CentOS"
+
+          - name: Start Apache service
             service:
                     name: apache2
                     state: started
+                    enabled: true
+
+            when: ansible_distribution == "Ubuntu"

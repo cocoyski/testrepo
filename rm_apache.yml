@@ -7,13 +7,40 @@
           - name: Update repository index
             apt:
                     update_cache: yes
+            when: ansible_distribution == "Ubuntu"
 
-          - name: Install apache2 package
+          - name: Remove apache2 package
             apt:
                     name: apache2
                     state: absent
-
-          - name: Install php modules for apache
+            when: ansible_distribution == "Ubuntu"
+    
+          - name: Uninstall php modules for apache
             apt:
                     name: libapache2-mod-php7.4
                     state: absent
+            when: ansible_distribution == "Ubuntu"
+        
+          - name: Update repository index
+            dnf:
+                    update_cache: yes
+            when: ansible_distribution == "CentOS"
+
+          - name: Remove apache2 package for CentOS
+            dnf:
+                    name: httpd
+                    state: absent
+            when: ansible_distribution == "CentOS"
+    
+          - name: Uninstall php modules for apache
+            dnf:
+                    name: php
+                    state: absent
+            when: ansible_distribution == "CentOS"
+
+          - name: Stop Apache service
+            service:
+                    name: apache2
+                    state: stopped
+                    enabled: false
+            when: ansible_distribution == "Ubuntu"
