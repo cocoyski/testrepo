@@ -1,0 +1,14 @@
+---ble_
+
+- hosts: all
+  become: true
+  tasks:
+  - name: Install Cowsay
+    apt:
+       name: cowsay
+    when: ansible_distribution == "Ubuntu"
+  
+  - name: Install cowsay in CentOS
+    dnf:
+       name: cowsay
+    when: ansible_distribution == "CentOS"
