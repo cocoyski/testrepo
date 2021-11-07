@@ -2,7 +2,7 @@
 
 - hosts: all
   become: true
-  tasks: 
+  pre_tasks: 
 
   - name: Install updates for Ubuntu servers
     apt:
@@ -36,4 +36,41 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
+  - name: Start httpd service on CentOS servers
+    service:
+      name: httpd
+      enabled: true
+      state: started
+    when: ansible_distribution == "CentOS"
+  
+- hosts: db_servers
+  become: true
+  tasks:
+  
+  - name: Install mariadb-server package
+    package:
+      name: mariadb-server
+      state: latest
+
+  - name: Start mariadb service
+    service:
+      name: mariadb
+      enabled: true
+      state: started 
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: Install Samba package (Ubuntu)
+    apt:
+      name: samba      
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install Samba package (CentOS)
+    dnf:
+      name: samba
+      state: latest
+    when: ansible_distribution == "CentOS"
 
