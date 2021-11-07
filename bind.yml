@@ -1,9 +1,0 @@
----
-
-- hosts: localhost
-  become: true
-  tasks:
-  - name: Install Bind9
-    apt:
-       name: bind9
-  
