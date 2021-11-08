@@ -27,7 +27,7 @@
          - libapache2-mod-php 
       state: latest
     when: ansible_distribution == "Ubuntu"
-
+ 
   - name: Install Apache and PHP for CentOS servers
     dnf:
       name: 
@@ -39,7 +39,7 @@
   - name: Start httpd service on CentOS servers
     service:
       name: httpd
-      enabled: true
+      enabled: yes
       state: started
     when: ansible_distribution == "CentOS"
   
@@ -74,3 +74,12 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
+- hosts: cowsay_servers
+  become: true
+  tasks:
+
+  - name: Install cowsay on ubuntu servers
+    apt:
+      name: cowsay
+      state: latest
+    when: ansible_distribution == "Ubuntu"
