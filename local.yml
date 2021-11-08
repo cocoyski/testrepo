@@ -2,15 +2,14 @@
   connection: local
   become: true
 
-  pre_tasks: 
-  - name: Update repositories
+  pre_tasks:
+  - name: Update Repositories
     apt:
       update_cache: yes
     changed_when: false
 
-  - name: Install Packages
+  tasks:
+  - name: Install Cowsay Package
     apt:
-      name: 
-         - apache2
-         - cowsay
+      name: cowsay
     
