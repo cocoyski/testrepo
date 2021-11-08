@@ -2,12 +2,6 @@
   connection: local
   become: true
 
-  pre_tasks:
-  - name: Update Repositories
-    apt:
-      update_cache: yes
-    changed_when: false
-
   tasks:
   - name: Install Cowsay Package
     apt:
